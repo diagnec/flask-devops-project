@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-python
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-python   # ✅ correct
+  template:
+    metadata:
+      labels:
+        app: app-python  # ✅ correct
+    spec:
+      containers:
+        - name: app-python
+          image: cheikh9708/app-python:v2
+          ports:
+            - containerPort: 5000
