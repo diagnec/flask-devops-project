@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:  # Cette ligne doit être au même niveau que 'metadata' pour définir la spec du pod
+      containers:
+      - name: flask
+        image: cheikh9708/flask:v1
+        ports:
+        - containerPort: 5000
+        envFrom:
+        - configMapRef:
+            name: configmap-app  # Nom de ton ConfigMap
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secret-postgresql  # Nom du secret PostgreSQL
+              key: POSTGRES_PASSWORD  # Clé contenant le mot de passe
