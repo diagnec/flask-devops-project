@@ -10,13 +10,6 @@ pipeline {
     }
 
     stages {
-
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/diagnec/flask-devops-project.git'
-            }
-        }
-
         stage('Verify Docker') {
             steps {
                 sh 'docker --version'
