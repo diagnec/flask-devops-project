@@ -11,18 +11,21 @@ spec:
     metadata:
       labels:
         app: flask
-    spec:  # Cette ligne doit être au même niveau que 'metadata' pour définir la spec du pod
+    spec:
+      imagePullSecrets:
+        - name: regcred
+
       containers:
       - name: flask
-        image: cheikh9708/flask:v1
+        image: ghcr.io/diagnec/flask-devops-project:latest
         ports:
         - containerPort: 5000
         envFrom:
         - configMapRef:
-            name: configmap-app  # Nom de ton ConfigMap
+            name: configmap-app
         env:
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: secret-postgresql  # Nom du secret PostgreSQL
-              key: POSTGRES_PASSWORD  # Clé contenant le mot de passe
+              name: secret-postgresql
+              key: POSTGRES_PASSWORD
